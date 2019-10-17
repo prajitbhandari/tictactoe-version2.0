@@ -52,9 +52,10 @@ class Game
   def check_player_move
     puts "Now #{@current_player.identifier} turn"
       puts "Place #{@current_player.move_token} in board"
-      @current_move = @current_player.ask_next_move
+      @current_move = @current_player.ask_next_move 
       if !@current_move.is_valid_move?
-        @b.register_move(@current_move)
+        @b.register_move(@current_move, @current_player)
+        # debugger
         @b.print_board
       else
         puts
@@ -75,9 +76,11 @@ class Game
   end
   
   def show_result
+    
     if @b.game_is_won?
+      # debugger
       puts 
-      puts "Yay #{@current_player} wins!!!"
+      puts "Yay #{@b.winning_player} wins!!!"
     elsif !@b.game_is_draw?
       puts
       puts 'Game is Tied'

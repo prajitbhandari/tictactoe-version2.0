@@ -16,11 +16,12 @@ class Board
     @draw_counter = 0
   end
 
-  def register_move(move)
-    cells[move.row][move.col] = @current_player
+  def register_move(move, current_player)
+    cells[move.row][move.col] = current_player.move_token
   end
   
   def print_board
+    puts
     (0...size).each do |x|
       (0...size).each do |y|
         print cells[x][y]
@@ -60,7 +61,7 @@ class Board
   end
 
   def right_diagonal_win?
-    player1_count= 1
+    player1_count = 1
     player2_count = 1
     (0...size - 1).each do |i|
       (0..size - 1).each do |j|
@@ -84,8 +85,8 @@ class Board
   def row_win?
     player1_count = 1
     player2_count = 1
-    (0...size).each do |i|
-      (0...size - 1).each do |j|
+    (0..size - 1).each do |i|
+      (0..size - 2).each do |j|
         if cells[i][j] == 'X' && cells[i][j + 1] == 'X'
           player1_count += 1
           return @result = @player1.identifier if player1_count == size
@@ -107,8 +108,8 @@ class Board
   def column_win?
     player1_count = 1
     player2_count = 1
-    (0...size).each do |i|
-      (0...size - 1).each do |j|
+    (0..size - 1).each do |i|
+      (0..size - 2).each do |j|
         if cells[j][i] == 'X' && cells[j + 1][i] == 'X'
           player1_count += 1
           return @result = @player1.identifier if player1_count == size
@@ -117,7 +118,8 @@ class Board
           player2_count += 1
           return @result = @player2.identifier if player2_count == size
 
-          return false elsif i == size - 1 && j == size - 2
+        elsif i == size - 1 && j == size - 2
+          return false
         end
       end
       player1_count = 1
@@ -140,5 +142,9 @@ class Board
     else
       return false
     end
+  end
+
+  def winning_player
+    return @result
   end
 end # class end
