@@ -5,7 +5,7 @@ require_relative 'tictactoe_player.rb'
 class Board
   attr_accessor :cells, :size
 
-  def initialize(size, player1, player2)
+  def initialize(size, player1, player2, current_player)
     @size = size
     @cells = []
     (0...size).each do |_i|
@@ -13,8 +13,33 @@ class Board
     end
     @player1 = player1
     @player2 = player2
+    @current_player = current_player
     @draw_counter = 0
   end
+
+  def is_valid_move?
+    # && is_duplicate_move?
+    if is_move_out_of_boundary?
+      return false  
+    else
+      return true
+    end   
+  end
+
+  def is_move_out_of_boundary?
+      if @current_player.get_next_move.row >= size || 
+      @current_player.get_next_move.col >= size || 
+      @current_player.get_next_move.row < 0 || 
+      @current_player.get_next_move.col < 0 
+        return true
+      else
+         return false
+      end  
+  end
+
+  # def is_duplicate_move?
+  #   return false if cells[row][col].any?
+  # end
 
   def register_move(move, current_player)
     cells[move.row][move.col] = current_player.move_token

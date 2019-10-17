@@ -17,4 +17,10 @@ class Player
     @col = gets.chomp.to_i
     @move_obj = Move.new(@row, @col)
   end
+
+  def get_next_move
+    return @move_obj
+  end
+
+  
 end

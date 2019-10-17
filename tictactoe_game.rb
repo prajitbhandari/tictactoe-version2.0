@@ -9,7 +9,7 @@ class Game
     @player2 = Player.new('Player 2', 'O')
     @current_player = @player1
     @cell_size = ask_board_size
-    @b = Board.new(@cell_size, @player1, @player2) 
+    @board = Board.new(@cell_size, @player1, @player2, @current_player) 
   end
   
   def ask_board_size
@@ -46,18 +46,19 @@ class Game
   end
   
   def ended?
-    @b.game_is_won? || @b.game_is_draw?
+    @board.game_is_won? || @board.game_is_draw?
   end
 
   def check_player_move
     puts "Now #{@current_player.identifier} turn"
       puts "Place #{@current_player.move_token} in board"
+      # current_move is a move object
       @current_move = @current_player.ask_next_move 
-      if !@current_move.is_valid_move?
-        @b.register_move(@current_move, @current_player)
+      if @board.is_valid_move?
         # debugger
-        @b.print_board
-      else
+        @board.register_move(@current_move, @current_player)
+        @board.print_board
+      elsif !@board.is_valid_move?
         puts
         puts '==================================================='
         puts "#{@current_player.identifier} choose valid row and column"
@@ -76,12 +77,11 @@ class Game
   end
   
   def show_result
-    
-    if @b.game_is_won?
+    if @board.game_is_won?
       # debugger
       puts 
-      puts "Yay #{@b.winning_player} wins!!!"
-    elsif !@b.game_is_draw?
+      puts "Yay #{@board.winning_player} wins!!!"
+    elsif !@board.game_is_draw?
       puts
       puts 'Game is Tied'
     end
