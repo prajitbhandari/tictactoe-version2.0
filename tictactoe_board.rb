@@ -69,6 +69,8 @@ class Board
   end
 
   def left_diagonal_win?
+    player1_count = 1
+    player2_count = 1
     (0...size - 1).each do |i|
       (0...size - 1).each do |j|
         if i == j
