@@ -9,7 +9,7 @@ class Game
     @player2 = Player.new('Player 2', 'O')
     @current_player = @player1
     @cell_size = ask_board_size
-    @board = Board.new(@cell_size, @player1, @player2, @current_player) 
+    @board = Board.new(@cell_size, @player1, @player2) 
   end
   
   def ask_board_size
@@ -53,16 +53,16 @@ class Game
     puts "Now #{@current_player.identifier} turn"
       puts "Place #{@current_player.move_token} in board"
       # current_move is a move object
-      @current_move = @current_player.ask_next_move 
-      if @board.is_valid_move?
+      current_move = @current_player.ask_next_move
+      if @board.is_valid_move?(@current_player)
         # debugger
-        @board.register_move(@current_move, @current_player)
+        @board.register_move(current_move, @current_player)
         @board.print_board
-      elsif !@board.is_valid_move?
+      else
         puts
-        puts '==================================================='
         puts "#{@current_player.identifier} choose valid row and column"
-        handle_next_move  
+        puts '==================================================='
+        handle_next_move
       end
   end
 
