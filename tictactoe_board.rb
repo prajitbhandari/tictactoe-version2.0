@@ -94,8 +94,8 @@ class Board
   def right_diagonal_win?
     player1_count = 1
     player2_count = 1
-    (0...size - 1).each do |i|
-      (0..size - 1).each do |j|
+    (0...size).each do |i|
+      (0...size).each do |j|
         if i + j == size - 1
           if cells[i][j] == 'X' && cells[i + 1][j - 1] == 'X'
             player1_count += 1
@@ -116,8 +116,8 @@ class Board
   def row_win?
     player1_count = 1
     player2_count = 1
-    (0..size - 1).each do |i|
-      (0..size - 2).each do |j|
+    (0...size).each do |i|
+      (0...size - 1).each do |j|
         if cells[i][j] == 'X' && cells[i][j + 1] == 'X'
           player1_count += 1
           return @result = @player1.identifier if player1_count == size
@@ -139,8 +139,8 @@ class Board
   def column_win?
     player1_count = 1
     player2_count = 1
-    (0..size - 1).each do |i|
-      (0..size - 2).each do |j|
+    (0...size).each do |i|
+      (0...size - 1).each do |j|
         if cells[j][i] == 'X' && cells[j + 1][i] == 'X'
           player1_count += 1
           return @result = @player1.identifier if player1_count == size
