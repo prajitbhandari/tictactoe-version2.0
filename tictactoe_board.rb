@@ -18,9 +18,9 @@ class Board
 
   def is_valid_move?(current_player)
     if is_move_out_of_boundary?(current_player) || is_duplicate_move?(current_player)
-       return false
+      false
     else
-      return true
+      true
     end
   end
 
@@ -72,7 +72,7 @@ class Board
     (0...size - 1).each do |i|
       (0...size - 1).each do |j|
         if i == j
-          if cells[i][j] == "X" && cells[i + 1][j + 1] == 'X'
+          if cells[i][j] == 'X' && cells[i + 1][j + 1] == 'X'
             player1_count += 1
             return @result = @player1.identifier if player1_count == size
 
