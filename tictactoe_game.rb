@@ -9,9 +9,9 @@ class Game
     @player2 = Player.new('Player 2', 'O')
     @current_player = @player1
     @cell_size = ask_board_size
-    @board = Board.new(@cell_size, @player1, @player2) 
+    @board = Board.new(@cell_size, @player1, @player2)
   end
-  
+
   def ask_board_size
     puts 'Welcome to Tic Tac Toe Game!!!'
     #   prompt board size form user
@@ -44,26 +44,27 @@ class Game
     #    self.showResult
     # end
   end
-  
+
   def ended?
     @board.game_is_won? || @board.game_is_draw?
   end
 
-  def check_player_move
+  def player_turn_info
     puts "Now #{@current_player.identifier} turn"
-      puts "Place #{@current_player.move_token} in board"
-      # current_move is a move object
-      current_move = @current_player.ask_next_move
-      if @board.is_valid_move?(@current_player)
-        # debugger
-        @board.register_move(current_move, @current_player)
-        @board.print_board
-      else
-        puts
-        puts "#{@current_player.identifier} choose valid row and column"
-        puts '==================================================='
-        handle_next_move
-      end
+    puts "Place #{@current_player.move_token} in board"
+  end
+
+  def check_player_move
+    player_turn_info
+    current_move = @current_player.ask_next_move
+    if @board.is_valid_move?(@current_player)
+      @board.register_move(current_move, @current_player)
+      @board.print_board
+    else
+      puts "#{@current_player.identifier} choose valid row and column"
+      puts '==================================================='
+      handle_next_move
+    end
   end
 
   def handle_next_move
@@ -73,19 +74,19 @@ class Game
     else
       check_player_move
       @current_player = @player1
-    end  
+    end
   end
-  
+
   def show_result
     if @board.game_is_won?
       # debugger
-      puts 
+      puts
       puts "Yay #{@board.winning_player} wins!!!"
     elsif !@board.game_is_draw?
       puts
       puts 'Game is Tied'
     end
   end
-end # class end
+end
 @game = Game.new
 @game.proceed

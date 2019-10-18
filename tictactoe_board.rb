@@ -18,39 +18,39 @@ class Board
 
   def is_valid_move?(current_player)
     if is_move_out_of_boundary?(current_player) || is_duplicate_move?(current_player)
-      return false  
+       return false
     else
       return true
-    end   
+    end
   end
 
   def is_move_out_of_boundary?(current_player)
-      next_row = current_player.get_next_move.row
-      next_col = current_player.get_next_move.col
-      if next_row >= size || next_col >= size || next_row < 0 || next_col < 0
-        return true
+    next_row = current_player.get_next_move.row
+    next_col = current_player.get_next_move.col
+    if next_row >= size || next_col >= size || next_row.negative? || next_col.negative?
+      return true
 
-      else
-         return false
-      end 
+    else
+      return false
+    end
   end
 
   def is_duplicate_move?(current_player)
     next_row = current_player.get_next_move.row
     next_col = current_player.get_next_move.col
-    
-    if cells[next_row][next_col] == "X"|| cells[next_row][next_col] == "O"
+
+    if cells[next_row][next_col] == 'X' || cells[next_row][next_col] == 'O'
       return true
 
-    elsif cells[next_row][next_col] != "X"|| cells[next_row][next_col] != "O" 
-        return false
+    elsif cells[next_row][next_col] != 'X' || cells[next_row][next_col] != 'O'
+      return false
     end
   end
 
   def register_move(move, current_player)
     cells[move.row][move.col] = current_player.move_token
   end
-  
+
   def print_board
     puts
     (0...size).each do |x|
@@ -69,12 +69,10 @@ class Board
   end
 
   def left_diagonal_win?
-    player1_count = 1
-    player2_count = 1
     (0...size - 1).each do |i|
       (0...size - 1).each do |j|
         if i == j
-          if cells[i][j] == 'X' && cells[i + 1][j + 1] == 'X'
+          if cells[i][j] == "X" && cells[i + 1][j + 1] == 'X'
             player1_count += 1
             return @result = @player1.identifier if player1_count == size
 
@@ -169,13 +167,13 @@ class Board
   def game_is_draw?
     @draw_counter += 1
     if @draw_counter == (size * size) + 1
-      return !game_is_won?
+      return true
     else
       return false
     end
   end
 
   def winning_player
-    return @result
+    @result
   end
-end # class end
+end

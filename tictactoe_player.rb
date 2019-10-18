@@ -19,6 +19,6 @@ class Player
   end
 
   def get_next_move
-    return @move_obj
+    @move_obj
   end
 end

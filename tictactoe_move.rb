@@ -10,6 +10,3 @@ class Move
     @col = col
   end
 end
-
-   
-
