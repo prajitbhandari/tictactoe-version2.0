@@ -38,7 +38,7 @@ class Board
   def is_duplicate_move?(current_player)
     next_row = current_player.get_next_move.row
     next_col = current_player.get_next_move.col
-
+    
     if cells[next_row][next_col] == 'X' || cells[next_row][next_col] == 'O'
       return true
 
